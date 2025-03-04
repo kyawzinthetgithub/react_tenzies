@@ -1,6 +1,7 @@
 import Die from "@/components/Die";
 import { nanoid } from "nanoid";
 import { useState } from "react";
+import ReactConfetti from "react-confetti";
 
 export default function Main() {
   const generateAllNewDice = () => {
@@ -11,6 +12,10 @@ export default function Main() {
     }));
   };
   const [dices, setDices] = useState(generateAllNewDice());
+
+  const gameWon =
+    dices.every((dice) => dice.isHeld) &&
+    dices.every((dice) => dice.value === dices[0].value);
 
   const rollDice = () => {
     setDices((oldDices) =>
@@ -31,6 +36,7 @@ export default function Main() {
   return (
     <>
       <main className="bg-white w-full h-full p-5 md:max-w-[400px] md:max-h-[400px] rounded-xl flex flex-col gap-5 justify-center items-center select-none">
+        {gameWon && <ReactConfetti />}
         <div className="text-center">
           <h1 className="text-3xl font-bold">Tenzies</h1>
           <p className="text-center my-5">
@@ -54,7 +60,7 @@ export default function Main() {
           onClick={rollDice}
           className="cursor-pointer flex justify-center items-center rounded bg-[#4726fb] text-white hover:bg-[#a36ec7] transition-all px-6 py-1"
         >
-          Roll
+          {gameWon ? "New Game" : "Roll"}
         </button>
       </main>
     </>
