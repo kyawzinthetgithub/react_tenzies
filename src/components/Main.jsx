@@ -111,9 +111,11 @@ export default function Main() {
             )}
           </p>
         </div>
-        <div className="my-5 text-xl">{isStart && formatTime(time)}</div>
+        {isStart && (
+          <div className="my-5 text-xl">{isStart && formatTime(time)}</div>
+        )}
         <div className="die-container grid grid-cols-5 gap-5 w-full">
-          {dices &&
+          {dices && isStart ?
             dices.map((dice) => (
               <Die
                 key={dice.id}
@@ -121,7 +123,7 @@ export default function Main() {
                 isHeld={dice.isHeld}
                 hold={() => hold(dice.id)}
               />
-            ))}
+            )) : <div className="col-span-5 text-2xl text-[#0b2434] text-center">Press "Start" to play</div>}
         </div>
         {isStart ? (
           <button
@@ -136,7 +138,7 @@ export default function Main() {
           <button
             onClick={startGame}
             type="button"
-            className="cursor-pointer flex justify-center items-center rounded bg-[#4726fb] text-white hover:bg-[#a36ec7] transition-all px-6 py-1"
+            className="cursor-pointer flex justify-center items-center rounded bg-[#0b2434] text-white hover:bg-[#0b3434] transition-all px-6 py-1"
           >
             Start
           </button>
